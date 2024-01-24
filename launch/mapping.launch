@@ -1,0 +1,9 @@
+<launch>
+  <!-- Gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+    <rosparam file="$(find final_project)/param/gmapping_params.yaml" command="load" />
+  </node>
+
+  <!-- Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final_project)/rviz/view_mapping.rviz"/>
+</launch>
