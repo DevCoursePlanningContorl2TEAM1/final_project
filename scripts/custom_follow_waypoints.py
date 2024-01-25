@@ -8,15 +8,11 @@ from smach import State, StateMachine
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import PoseArray, PoseWithCovarianceStamped
 from std_msgs.msg import Empty
-<<<<<<< HEAD
 
-waypoints = []
-=======
 from datetime import datetime
 
 waypoints = []
 start_time = None
->>>>>>> cf3961c (Created custom_follow_waypoints.py file.)
 
 def convert_PoseWithCovarianceStamped_to_PoseArray(waypoints):
     """Used to publish waypoints as pose array so that you can see them in rviz, etc."""
@@ -86,7 +82,6 @@ class GetPath(State):
             rospy.loginfo("Recieved new point")
             waypoints.append(pose)
 
-            
             self.pose_array_publisher.publish(convert_PoseWithCovarianceStamped_to_PoseArray(waypoints))
 
         # Path is ready! return success and move on to the next state (FOLLOW_PATH)
@@ -106,12 +101,6 @@ class FollowPath(State):
         rospy.loginfo('Connected to move_base.')
 
     def execute(self, userdata):
-<<<<<<< HEAD
-        global waypoints
-
-        # Execute waypoints each in sequence
-        for waypoint in waypoints:
-=======
         global waypoints, start_time
 
         start_time = datetime.now()  # Record the start time
@@ -119,7 +108,6 @@ class FollowPath(State):
 
         # Execute waypoints each in sequence
         for index, waypoint in enumerate(waypoints, start=1):
->>>>>>> cf3961c (Created custom_follow_waypoints.py file.)
             if waypoints == []: # Break if preempted
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
@@ -130,13 +118,6 @@ class FollowPath(State):
             goal.target_pose.pose.position = waypoint.pose.pose.position
             goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
 
-<<<<<<< HEAD
-            rospy.loginfo("Executing move_base goal to position (x, y): %s, %s" %
-                          (waypoint.pose.pose.position.x, waypoint.pose.pose.position.y))
-            rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
-            self.client.send_goal(goal=goal)
-            self.client.wait_for_result()
-=======
             rospy.loginfo("Executing move_base goal to waypoint %d at position (x, y): %s, %s" %
                           (index, waypoint.pose.pose.position.x, waypoint.pose.pose.position.y))
             rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
@@ -152,8 +133,6 @@ class FollowPath(State):
                 for i in range(5):
                     rospy.sleep(1)  # Wait for 1 second
                     rospy.loginfo("Waiting... %d seconds" % (i + 1))
-
->>>>>>> cf3961c (Created custom_follow_waypoints.py file.)
         return 'success'
 
 ###############################################################################
@@ -163,11 +142,6 @@ class PathComplete(State):
         State.__init__(self, outcomes=['success'])
 
     def execute(self, userdata):
-<<<<<<< HEAD
-        rospy.loginfo("###############################")
-        rospy.loginfo("##### REACHED FINISH GATE #####")
-        rospy.loginfo("###############################")
-=======
         global start_time
 
         end_time = datetime.now()
@@ -175,7 +149,6 @@ class PathComplete(State):
         rospy.loginfo("##################################")
         rospy.loginfo("Total journey time: %s" % str(total_duration))
         rospy.loginfo("##################################")
->>>>>>> cf3961c (Created custom_follow_waypoints.py file.)
         return 'success'
 
 ###############################################################################
