@@ -1,0 +1,10 @@
+<launch>
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}][${thread}][${node}/${function}:${line}]: ${message}"/>
+    <arg name="waypoints_topic" default="my_waypoints"/>
+
+    <node pkg='final_project' type='custom_follow_waypoints.py' name="custom_follow_waypoints"
+    output="screen" clear_params="true">
+        <param name="goal_frame_id" value="map"/>
+        <param name="custom_waypoints_topic" value="$(arg waypoints_topic)"/>
+    </node>
+</launch>
