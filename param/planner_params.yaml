@@ -4,7 +4,7 @@ NavfnROS:
 
 DWAPlannerROS:
   # Robot Configuration Parameters
-  max_vel_x: 1.0
+  max_vel_x: 10.0
   min_vel_x: -1.0
 
   max_vel_y: 0.0
@@ -19,13 +19,13 @@ DWAPlannerROS:
   min_rot_vel: 0.7
   #  rot_stopped_vel: 0.01
 
-  acc_lim_x: 2.0
-  acc_lim_theta: 2.0
+  acc_lim_x: 6.0
+  acc_lim_theta: 6.0
   acc_lim_y: 0.0
 
   # Goal Tolerance Parametes
   yaw_goal_tolerance: 0.2
-  xy_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.3
 
   # Forward Simulation Parameters
   sim_time: 3.5
